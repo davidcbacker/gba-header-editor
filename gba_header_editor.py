@@ -13,6 +13,7 @@ if len(sys.argv) != 4:
 rom = Path(sys.argv[1])
 title = sys.argv[2]
 game_code = sys.argv[3]
+game_code = game_code.upper()
 
 if not rom.is_file():
     sys.exit("Error: ROM file not found")
