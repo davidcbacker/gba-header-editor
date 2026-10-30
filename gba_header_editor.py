@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-#
-# Modify header values of a GBA ROM
+"""Modify header values of a GBA ROM"""
 
 import sys
 import shutil
