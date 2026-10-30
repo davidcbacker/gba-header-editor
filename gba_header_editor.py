@@ -23,10 +23,16 @@ data = bytearray(rom.read_bytes())
 if len(data) < 0xC0:
     sys.exit("Error: File is too small to contain a GBA header")
 
-if len(title.encode("ascii")) > 12:
+try:
+    title_bytes = title.encode("ascii")
+    game_code_bytes = game_code.encode("ascii")
+except UnicodeEncodeError:
+    sys.exit("Error: Title and game code must contain ASCII characters only")
+
+if len(title_bytes) > 12:
     sys.exit("Error: Game title must be at most 12 ASCII characters")
 
-if len(game_code) != 4 or not game_code.isascii():
+if len(game_code_bytes) != 4:
     sys.exit("Error: Game code must be exactly 4 ASCII characters")
 
 region_char = game_code[3].upper()
@@ -69,10 +75,10 @@ shutil.copy2(rom, backup)
 #Header checksum  0xBD     1 byte
 
 # Write title (offset 0xA0, 12 bytes)
-data[0xA0:0xAC] = title.encode("ascii").ljust(12, b"\x00")
+data[0xA0:0xAC] = title_bytes.ljust(12, b"\x00")
 
 # Write game code (offset 0xAC, 4 bytes)
-data[0xAC:0xB0] = game_code.encode("ascii")
+data[0xAC:0xB0] = game_code_bytes
 
 # Recalculate header checksum
 checksum = (-(sum(data[0xA0:0xBD]) + 0x19)) & 0xFF
