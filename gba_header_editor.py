@@ -53,6 +53,10 @@ print(f"Game code {game_code} implies region {region_code}.")
 
 # Backup original ROM
 backup = rom.with_suffix(rom.suffix + ".bak")
+
+if backup.exists():
+    sys.exit(f"Error: Backup already exists: {backup}")
+
 shutil.copy2(rom, backup)
 
 # Field	ROM offset	Length
