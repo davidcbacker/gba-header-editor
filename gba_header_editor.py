@@ -62,7 +62,7 @@ shutil.copy2(rom, backup)
 #Fixed value      0xB2     1 byte
 #Unit code        0xB3     1 byte
 #Device type      0xB4     1 byte
-#Header checksum  0xBDi    1 byte
+#Header checksum  0xBD     1 byte
 
 # Write title (offset 0xA0, 12 bytes)
 data[0xA0:0xAC] = title.encode("ascii").ljust(12, b"\x00")
