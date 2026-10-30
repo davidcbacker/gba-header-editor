@@ -23,10 +23,13 @@ data = bytearray(rom.read_bytes())
 if len(data) < 0xC0:
     sys.exit("Error: File is too small to contain a GBA header")
 
-if len(title.encode("ascii")) > 12:
+if not title.isascii() or not game_code.isascii():
+    sys.exit("Error: Title and game code must contain ASCII characters only")
+
+if len(title) > 12:
     sys.exit("Error: Game title must be at most 12 ASCII characters")
 
-if len(game_code) != 4 or not game_code.isascii():
+if len(game_code) != 4:
     sys.exit("Error: Game code must be exactly 4 ASCII characters")
 
 region_char = game_code[3].upper()
